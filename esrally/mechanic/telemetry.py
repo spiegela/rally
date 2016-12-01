@@ -597,7 +597,7 @@ class IndexStats(InternalTelemetryDevice):
 
     def on_benchmark_stop(self):
         logger.info("Gathering indices stats")
-        stats = self.client.indices.stats(metric="_all", level="shards")
+        stats = self.client.indices.stats(metric="_all", level="shards", include_segment_file_sizes="true")
         p = stats["_all"]["primaries"]
 
         # actually this is add_count
@@ -615,6 +615,21 @@ class IndexStats(InternalTelemetryDevice):
         self.add_metrics(self.extract_value(p, ["indexing", "index_time_in_millis"]), "indexing_total_time", "ms")
         self.add_metrics(self.extract_value(p, ["refresh", "total_time_in_millis"]), "refresh_total_time", "ms")
         self.add_metrics(self.extract_value(p, ["flush", "total_time_in_millis"]), "flush_total_time", "ms")
+
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "dii", "size_in_bytes"]), "dii_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "doc", "size_in_bytes"]), "doc_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "fdx", "size_in_bytes"]), "fdx_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "dim", "size_in_bytes"]), "dim_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "fdt", "size_in_bytes"]), "fdt_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "fnm", "size_in_bytes"]), "fnm_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "dvd", "size_in_bytes"]), "dvd_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "dvm", "size_in_bytes"]), "dvm_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "tip", "size_in_bytes"]), "tip_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "tim", "size_in_bytes"]), "tim_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "si", "size_in_bytes"]), "si_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "nvd", "size_in_bytes"]), "nvd_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "nvm", "size_in_bytes"]), "nvm_size_in_bytes", "byte")
+        self.add_metrics(self.extract_value(p, ["segments", "file_sizes", "pos", "size_in_bytes"]), "pos_size_in_bytes", "byte")
 
     def add_metrics(self, value, metric_key, unit=None):
         if value:

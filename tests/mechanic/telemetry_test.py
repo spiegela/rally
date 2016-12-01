@@ -418,7 +418,23 @@ class IndexStatsTests(TestCase):
                         "stored_fields_memory_in_bytes": 1024,
                         "doc_values_memory_in_bytes": 128,
                         "terms_memory_in_bytes": 256,
-                        "points_memory_in_bytes": 512
+                        "points_memory_in_bytes": 512,
+                        "file_sizes": {
+                            "dii": { "size_in_bytes":      8552, "description": "Points" },
+                            "doc": { "size_in_bytes": 236429758, "description": "Frequencies" },
+                            "fdx": { "size_in_bytes":    636858, "description": "Field Index" },
+                            "dim": { "size_in_bytes": 199771717, "description": "Points" },
+                            "fdt": { "size_in_bytes": 812786379, "description": "Field Data" },
+                            "fnm": { "size_in_bytes":    487464, "description": "Fields" },
+                            "dvd": { "size_in_bytes": 692513616, "description": "DocValues" },
+                            "dvm": { "size_in_bytes":    197706, "description": "DocValues" },
+                            "tip": { "size_in_bytes":  11887500, "description": "Term Index" },
+                            "tim": { "size_in_bytes": 658631045, "description": "Term Dictionary" },
+                            "si":  { "size_in_bytes":     5736, "description": "Segment Info" },
+                            "nvd": { "size_in_bytes": 94717780, "description": "Norms" },
+                            "nvm": { "size_in_bytes":    18834, "description": "Norms" },
+                            "pos": { "size_in_bytes": 51762724, "description": "Positions" }
+                        }
                     },
                     "merges": {
                         "total_time_in_millis": 300,
@@ -461,6 +477,20 @@ class IndexStatsTests(TestCase):
             mock.call("indexing_total_time", 2000, "ms"),
             mock.call("refresh_total_time", 200, "ms"),
             mock.call("flush_total_time", 100, "ms"),
+            mock.call("dii_size_in_bytes", 8552, "byte"),
+            mock.call("doc_size_in_bytes", 236429758, "byte"),
+            mock.call("fdx_size_in_bytes", 636858, "byte"),
+            mock.call("dim_size_in_bytes", 199771717, "byte"),
+            mock.call("fdt_size_in_bytes", 812786379, "byte"),
+            mock.call("fnm_size_in_bytes", 487464, "byte"),
+            mock.call("dvd_size_in_bytes", 692513616, "byte"),
+            mock.call("dvm_size_in_bytes", 197706, "byte"),
+            mock.call("tip_size_in_bytes", 11887500, "byte"),
+            mock.call("tim_size_in_bytes", 658631045, "byte"),
+            mock.call("si_size_in_bytes", 5736, "byte"),
+            mock.call("nvd_size_in_bytes", 94717780, "byte"),
+            mock.call("nvm_size_in_bytes", 18834, "byte"),
+            mock.call("pos_size_in_bytes", 51762724, "byte"),
         ])
 
 
